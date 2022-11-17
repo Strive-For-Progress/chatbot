@@ -1,21 +1,22 @@
 #NOTE: All words that need to be recognised in the JSON file should be lowercased.
 
 import json
-import re 
-#正規運算式 (regular expression) 常用在對文件進行解析
+import re #正規運算式 (regular expression) 常用在對文件進行解析
 import random_responses #隨機對話腳本
+import requests #提出請求
+import pymysql #與sql連動會用到
+#import charts #資料庫圖表會用到
 
 
-# Load JSON data
+# Load/Store JSON data
 def load_json(file):
     with open(file) as bot_responses: #開啟檔案，並傳給 bot_responses
         print(f"Loaded '{file}' successfully!")
         return json.load(bot_responses) #以json的方式載入檔案
         	#with語句確保檔案可以於結尾確實關掉
-
-
-# Store JSON data
+    
 response_data = load_json("bot.json")
+
 
 
 def get_response(input_string):
@@ -75,6 +76,30 @@ def start_gesture():
     print("--------------")
 
 ################################################################################
+# 資料庫連線參數設定
+db_settings = {
+    "host": "127.0.0.1",
+    "port": 3306,
+    "user": "root",
+    "password": "password",
+    "db": "test_schema",
+    "charset": "utf8"
+}
+
+try:
+    conn = pymysql.connect(**db_settings) # 建立Connection物件    
+    with conn.cursor() as cursor: # 建立Cursor物件
+        command = "SELECT * FROM charts"
+        # 執行指令
+        cursor.execute(command)
+        # 取得所有資料
+        result = cursor.fetchall()
+        print(result)
+except Exception as ex: #使用Python的try-except例外處理機制
+    print(ex)
+
+
+
 
 start_gesture();
 while True:
