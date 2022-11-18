@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<link rel="stylesheet" href="style.css">
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <meta property="og:title" content="Taiwan-India Professional Expertise and Organization Cooperation Platform"/>
+    <meta property="og:description" content="The Taiwan-India Professional Expertise and Organization Cooperation Platform was established by the Taiwan-India Joint Research Center on Artificial Intelligence at National Chung Cheng University (CCU) and Indian Institute of Technology Ropar (IITR), Taipei Economic Cultural Center (TECC) in India, and the Ministry of Science and Technology (MOST). The main goal of this platform is to provide matching among professionals and organizations in and across Taiwan and India. Professionals include, but not limited to, university professors, R&D experts and scholars, industry experts, etc. Professional organizations include, but not limited to, universities, R&D institutions, government units, and industry manufacturers."/>
+    <meta property="og:image" content="https://embedded.cs.ccu.edu.tw/center/TWIN.jpg" />
+    <meta property="og:image:width" content="600" />
+    <meta property="og:image:height" content="600" />
+
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:title" content="Taiwan-India Professional Expertise and Organization Cooperation Platform">
+    <meta name="twitter:description" content="The Taiwan-India Professional Expertise and Organization Cooperation Platform was established by the Taiwan-India Joint Research Center on Artificial Intelligence at National Chung Cheng University (CCU) and Indian Institute of Technology Ropar (IITR), Taipei Economic Cultural Center (TECC) in India, and the Ministry of Science and Technology (MOST). The main goal of this platform is to provide matching among professionals and organizations in and across Taiwan and India. Professionals include, but not limited to, university professors, R&D experts and scholars, industry experts, etc. Professional organizations include, but not limited to, universities, R&D institutions, government units, and industry manufacturers.">
+    <meta name="twitter:image" content="https://embedded.cs.ccu.edu.tw/center/TWIN.jpg">  
+
+    <link rel="icon" href="<%= BASE_URL %>TWIN.ico">
+    <title><%= htmlWebpackPlugin.options.title %></title>
+  </head>
+  <body>
+    <div id="app"></div>
+    <!-- built files will be auto injected -->
+
+    <div class="container">
+      <div class="chatbox">
+          <div class="chatbox__support">
+              <div class="chatbox__header">
+                  <div class="chatbox__image--header">
+                      <img src="https://img.icons8.com/color/48/000000/circled-user-female-skin-type-5--v1.png" alt="image">
+                  </div>
+                  <div class="chatbox__content--header">
+                      <h4 class="chatbox__heading--header">Chat support</h4>
+                      <p class="chatbox__description--header">Hi. My name is ted. How can I help you?</p>
+                  </div>
+              </div>
+              <div class="chatbox__messages">
+                  <div></div>
+              </div>
+              <div class="chatbox__footer">
+                  <input type="text" placeholder="Write a message...">
+                  <button class="chatbox__send--footer send__button">Send</button>
+              </div>
+          </div>
+          <div class="chatbox__button">
+              <button><img src="chatbox-icon.svg" /></button>
+          </div>
+      </div>
+  </div>
+  
+      <script>
+          $SCRIPT_ROOT = {{ request.script_root|tojson }};
+      </script>
+      <script type="text/javascript" src="app.js"></script>
+
+  </body>
+</html>
