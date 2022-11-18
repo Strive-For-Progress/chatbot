@@ -1,0 +1,5 @@
+虛擬環境裡須下載Flask、torch、torchvision、nltk等後端所需使用的套件
+pip install Flask torch torchvision nltk
+
+backend資料夾裡面的資料為pair\ccu_ai_lab_backend\所需新增或修改的資料,可以直接複製貼上取代即可
+frontend資料夾裡面為pair\ccu_ai_lab_frontend\ccu_ai_lab_frontend\public\所需新增或修改的資料,可以直接複製貼上取代即可
