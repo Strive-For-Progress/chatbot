@@ -3,3 +3,6 @@ pip install Flask torch torchvision nltk
 
 backend資料夾裡面的資料為pair\ccu_ai_lab_backend\所需新增或修改的資料,可以直接複製貼上取代即可
 frontend資料夾裡面為pair\ccu_ai_lab_frontend\ccu_ai_lab_frontend\public\所需新增或修改的資料,可以直接複製貼上取代即可
+
+
+目前聊天機器人仍為使用樣板做執行,還未替換成靖文所寫好的機器人
