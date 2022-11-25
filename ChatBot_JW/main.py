@@ -100,23 +100,23 @@ except Exception as ex: #使用Python的try-except例外處理機制
 
 
 
+if __name__ == "__main__": #新增此行避免被引用時進入無窮迴圈
+	start_gesture();
+	while True:
 
-start_gesture();
-while True:
+	#	pass_score = 0
+	#	#可藉由網路連線布林值check是否有斷線！
+	#	if connect_website:
 
-#	pass_score = 0
-#	#可藉由網路連線布林值check是否有斷線！
-#	if connect_website:
-	
-#		pass_score += 1
-	
-	#可藉由登入授權布林值check是否有登入！
-#	if log_in:
-	
-#		pass_score +=1
-		
-#	if pass_score == 2:
-		user_input = input("You: ")
-		print("Bot: ", get_response(user_input))
+	#		pass_score += 1
+
+		#可藉由登入授權布林值check是否有登入！
+	#	if log_in:
+
+	#		pass_score +=1
+
+	#	if pass_score == 2:
+			user_input = input("You: ")
+			print("Bot: ", get_response(user_input))
 
 
