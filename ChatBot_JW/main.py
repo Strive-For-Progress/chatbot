@@ -100,7 +100,7 @@ except Exception as ex: #使用Python的try-except例外處理機制
 
 
 
-if __name__ == "__main__": #新增此行避免被引用時進入無窮迴圈
+if __name__ == "__main__": #新增此行避免被機器人引用get_response()函式時進入無窮迴圈
 	start_gesture();
 	while True:
 
