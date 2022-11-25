@@ -9,3 +9,5 @@ A simple Python chat bot project simplifying my previous chat bot by adding a JS
 # 更新日誌
 ### 11.17.1505
 1、新增功能： **連結到本地端SQL** 資料庫去抓取所需資料。(目前資料庫是我自己測試用的)
+### 11.25.2313
+1、更新main.py： 新增code避免被機器人引用函式時進入無窮迴圈 by昱喆
