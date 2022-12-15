@@ -5,48 +5,126 @@ db = pymysql.connect(host='mysql.cs.ccu.edu.tw',
                     password='xbt109u',
                     database='xbt109u_appdb')
 
+def tagToProjects(tags=[],user_id=-1,live=True,limit=-1):
+    #依據tags內容(match越多越優先)，列出user_id非PI、COPI的project
+    #不填user則直接依tags計算
+    if(len(tags)==1): tag_text = f'r.name = "{tags[0]}" '
+    elif(len(tags) == 0): return []
+    else: tag_text = f"r.name IN {str(tuple(tags))} "
 
-def all_projects(live = True):
-    # 列出所有project、project的title、researches、PI、COPI 
-    # (live=True:不包含過期(copi_end_time))，反之包含
+    if(limit<=0): limit = 5 
     cursor = db.cursor(cursor=pymysql.cursors.DictCursor)
-    
-    sql = "SELECT a.id, a.project_title, a.user_id FROM specific_periods a "
-    if live : sql += "WHERE NOW() < a.apply_copi_end_date "
-    sql += "ORDER BY a.id"
+
+    if live: live_text = "AND NOW() < sp.apply_copi_end_date "
+    else: live_text = ""
+    sql=(
+        "SELECT sp.id, sp.project_title, GROUP_CONCAT(r.name ORDER BY r.id ASC) AS researches "
+        "FROM specific_periods sp "
+        "JOIN ( "
+                "SELECT sp.id, COUNT(distinct r.id) AS match_num "
+                "FROM researches r "
+                "INNER JOIN specific_period_researches spr "
+                "INNER JOIN specific_periods sp "
+                "INNER JOIN users u "
+                
+                "WHERE "
+                    f"{tag_text}"
+                    "AND r.id = spr.research_id AND spr.specific_period_id = sp.id "
+                    f"{live_text}"
+                    "AND u.id = sp.user_id "
+                    f"AND u.id != {user_id} AND {user_id} NOT IN (SELECT user_id FROM COPI_project CO WHERE CO.specific_period_id = sp.id) "
+                
+                "GROUP BY sp.id " 
+                ") match_table ON match_table.id = sp.id "
+        "JOIN specific_period_researches spr ON spr.specific_period_id = sp.id "
+        "JOIN researches r ON spr.research_id = r.id "
+        "GROUP BY sp.id "
+        "ORDER BY match_num DESC "
+        f"LIMIT 0, {limit} "
+    )
 
     cursor.execute(sql)
     results = cursor.fetchall()
 
-    for project in results: #添加researches、COPI
-        project['research'] = specific_period_researches(project['id'])
-        project['COPI']     = COPI_project(project['id'])
-        
+    return results
+
+def user_prefer_project(user_id=-1,live=True,limit=-1):
+    #依據user_id偏好(match越多越優先)，列出user_id非PI、COPI的project
+    #user不填 ，回傳{} 
+    # (live=True:不包含過期(copi_end_time))，反之包含
+    if(user_id < 0): return {}
+    if(limit <0): limit = 5
+    cursor = db.cursor(cursor=pymysql.cursors.DictCursor)
+
+    if live: live_text = "AND NOW() < sp.apply_copi_end_date "
+    else: live_text = ""
+    sql=(
+        "SELECT sp.id, sp.project_title, GROUP_CONCAT(r.name ORDER BY r.id ASC) AS researches "
+        "FROM specific_periods sp "
+        "JOIN ( "
+                "SELECT sp.id, COUNT(distinct r.id) AS match_num "
+                "FROM researches r "
+                "INNER JOIN specific_period_researches spr "
+                "INNER JOIN specific_periods sp "
+                "INNER JOIN users u "
+                
+                "WHERE "
+                    "r.name IN (SELECT r.name "
+                            "FROM researches r "
+                            "JOIN user_researches ur ON ur.research_id = r.id "
+                            "JOIN users u ON u.id = ur.user_id "
+                            f"WHERE u.id = {user_id} "
+                            ") "
+                    "AND r.id = spr.research_id AND spr.specific_period_id = sp.id "
+                    f"{live_text}"
+                    "AND u.id = sp.user_id "
+                    f"AND u.id != {user_id} AND {user_id} NOT IN (SELECT user_id FROM COPI_project CO WHERE CO.specific_period_id = sp.id) "
+                
+               
+                "GROUP BY sp.id "                 
+                ") match_num ON match_num.id = sp.id "
+        "JOIN specific_period_researches spr ON spr.specific_period_id = sp.id "
+        "JOIN researches r ON spr.research_id = r.id "
+        "GROUP BY sp.id "
+        "ORDER BY match_num DESC "
+        f"LIMIT 0, {limit} "
+    )
+
+    cursor.execute(sql)
+    results = cursor.fetchall()
+
+    return results
+
+def all_projects(live = True):
+    # 列出所有project、project的id、title、researches
+    # (live=True:不包含過期(copi_end_time))，反之包含
+    if live: live_text = "AND NOW() < sp.apply_copi_end_date "
+    else: live_text = ""
+
+    cursor = db.cursor(cursor=pymysql.cursors.DictCursor)
+
+    sql = (
+            "SELECT sp.id, sp.project_title "
+                ", GROUP_CONCAT(c.name ORDER BY c.id) AS researches "
+            "FROM specific_periods sp "
+            "JOIN specific_period_researches spr ON spr.specific_period_id = sp.id "
+            "JOIN researches c ON c.id = spr.research_id "
+            f"{live_text}"
+            "GROUP BY sp.id "
+            "ORDER BY sp.id "
+            "LIMIT 0,5 "
+        )
+
+    cursor.execute(sql)
+    results = cursor.fetchall()
+
     return results
 
 def all_researches():
     # 列出所有researches
     cursor = db.cursor(cursor=pymysql.cursors.DictCursor)
+
     sql = "SELECT name FROM researches"
-
-    cursor.execute(sql)
-    results = cursor.fetchall()
-
-    researches = []
-    for research in results:
-        researches.append(research['name'])
-
-    return researches
-
-def specific_period_researches(specific_period_id = -1):
-    # 列出project_id的researches
-    # 不填specific_period_id回傳[]
-    cursor = db.cursor(cursor=pymysql.cursors.DictCursor)
-    sql = "SELECT a.name FROM researches a \
-            JOIN specific_period_researches b \
-            WHERE b.specific_period_id = %d\
-                AND a.id = b.research_id" %(specific_period_id)
-
     cursor.execute(sql)
     results = cursor.fetchall()
 
@@ -58,11 +136,15 @@ def specific_period_researches(specific_period_id = -1):
 
 def user_researches(user_id=-1):
     # 列出user_id的researches
-    # 不填user_id回傳[]
+    if(user_id == -1): return [] # 不填user_id回傳[]
     cursor = db.cursor(cursor=pymysql.cursors.DictCursor)
-    sql = "SELECT a.name FROM researches a \
-        JOIN user_researches b \
-        WHERE b.user_id = %d AND a.id = b.research_id" % (user_id)
+
+    sql = (
+        "SELECT r.name FROM researches r "
+        "JOIN user_researches ur "
+        f"WHERE ur.user_id = {user_id} AND r.id = ur.research_id "
+        "ORDER BY ur.id"
+    )
     cursor.execute(sql)
     results = cursor.fetchall()
 
@@ -72,159 +154,40 @@ def user_researches(user_id=-1):
 
     return researches
 
-
-def COPI_project(specific_period_id=-1):
-    # 列出project_id的COPI(user)
-    # 不填specific_period_id回傳[]
+def specific_period_researches(specific_period_id = -1):
+    # 列出project_id的researches
+    if(specific_period_id == -1): return []    # 不填specific_period_id回傳[]
     cursor = db.cursor(cursor=pymysql.cursors.DictCursor)
-    sql = "SELECT a.user_id FROM COPI_project a \
-            WHERE a.specific_period_id = %d" %(specific_period_id)
 
+    sql = (
+        "SELECT r.name FROM researches r "
+        "JOIN specific_period_researches spr "
+        f"WHERE spr.specific_period_id = {specific_period_id} "
+            "AND r.id = spr.research_id "
+        "ORDER BY r.id"
+    )
     cursor.execute(sql)
     results = cursor.fetchall()
 
-    COPIs = []
-    for COPI in results:
-        COPIs.append(COPI['user_id'])
+    researches = []
+    for research in results:
+        researches.append(research['name'])
 
-    return COPIs
-
-def projects_match(tags=all_researches()):
-    #計算project的researches與tags符合的數量 (不包含過期(copi_end_time))
-    #不填tags，直接用projects_match()，回傳project的tag數量
-    #填[]，即projects_match(tags=[])，回傳{}
-    results={}
-    projects=all_projects(live=True)
-    for project in projects:
-        for research in project['research']:
-            if research in tags:
-                results[project['id']]= results.get(project['id'], 0) + 1 
-
-    return results
-
-def user_COPI_projects(user_id=-1,live=False):
-    #列出所有此user_id為pi、copi的project 包含過期(copi_end_time)
-    #不填回傳[]
-    COPI_projects=[]
-
-    projects=all_projects(live=live)
-    for project in projects:
-        if user_id == project['user_id'] or user_id in project['COPI']:
-            COPI_projects.append(project['id'])
-          
-    return COPI_projects    
-
-def not_user_COPI_projects(user_id=-1):
-    #列出所有此user_id"並非"pi、copi的project 包含過期(copi_end_time)
-    #不填回傳所有project_id
-    not_COPI_projects = []
-
-    projects=all_projects(live=False)
-    for project in projects:
-        if user_id != project['user_id'] and user_id not in project['COPI']:
-            not_COPI_projects.append(project['id'])
-
-    return not_COPI_projects
-
-def some_projects(ids=[], user_id=-1, live=True):
-    # 依照ids順序，列出指定project_id的project_id、project_title、researches、PI、COPI
-    # (不包含user_id是PI、COPI的project)(live=True: 不包含過期(copi_end_time))
-    # 不填回傳[]
-    if not ids: return []    
-    cursor = db.cursor(cursor=pymysql.cursors.DictCursor)
-
-    copi_projects=user_COPI_projects(user_id=user_id)
-
-    sql = f"SELECT a.id, a.project_title, a.user_id FROM specific_periods a \
-            WHERE a.user_id != {user_id} "      #user_id非project_id發起人
-
-    if len(ids) >= 2:                                       #project_id符合ids
-        sql += f"AND a.id in {format(tuple(ids))} "        
-    elif len(ids) == 1:                                     # tuple([1]) => (1,)
-        sql += f"AND a.id = {ids[0]} "                      # element == 1 時不能用tuple
-
-    if live:                                                # 過期？(copi_end_time)
-        sql += f"AND NOW() < a.apply_copi_end_date "
-
-    if len(copi_projects) == 1:                             # user_id非此project的PI、COPI
-        sql += f"AND a.id != {copi_projects[0]} "           # element == 1 時不能用tuple
-    elif copi_projects:
-        sql += f"AND a.id not in {tuple(copi_projects)} "    
-
-    if len(ids) >= 2 :                                      # order by ids
-        sql += f"ORDER BY FIELD(a.id, {','.join(str(x) for x in ids)})"
-
-    cursor.execute(sql)
-    results = cursor.fetchall()
-
-    for project in results:                                 #添加researches、COPI
-        project['research'] = specific_period_researches(project['id'])
-        project['COPI']     = COPI_project(project['id'])
-        
-    return results
+    return researches
 
 if __name__ == "__main__":
-
-    print("========================================")
-    print(f"所有的projects(含過期)：")
-    for project in all_projects(live=False): print(project)
-
-    print("========================================")
-    print(f"所有的researches：\n{all_researches()}")
-
-    print("========================================")
-    u_id=6  # 取user_6的資料    
-    print(f"user_{u_id}的researches：\n{user_researches(user_id=u_id)}")
+    print("===================================")    
+    for project in tagToProjects(tags=['AI','C++'],user_id=-1,live=True,limit=-1):print(project)
+    print("===================================")
+    for project in user_prefer_project(user_id=7,limit=-1): print(project)
+    print("===================================")
+    for project in all_projects(live=True): print(project)
+    print("===================================")
+    print(all_researches())
+    print("===================================")
+    print(user_researches(user_id=6))
+    print("===================================")
+    print(specific_period_researches(specific_period_id=3))
+    print("===================================")    
+    print(all_researches())
     
-    print("========================================")
-    p_id=2  # 取project_2的資料    
-    print(f"project_{p_id}的researches：\n{specific_period_researches(specific_period_id=p_id)}")
-    
-    print("========================================")
-    p_id=2
-    print(f"project_{p_id}的PI、COPI：\n{COPI_project(specific_period_id=p_id)}")
-    
-    print("========================================")
-    u_id=7
-    print(f"user_{u_id}為PI、COPI的project：\n{user_COPI_projects(user_id=u_id)}")
-    
-    print("========================================")
-    u_id=7
-    print(f"user_{u_id}並非PI、COPI的project：\n{not_user_COPI_projects(user_id=u_id)}")
-    
-    print("========================================")
-    tags=['web','DL','AI']
-    print(f"所有project的researches與tags={tags}有幾項符合：({{project_id : match_num}})\n{projects_match(tags=tags)}")
-    
-    print("========================================")
-    print("所有的projects：(不列出過期)")
-    for project in all_projects(): print(project)
-    
-    print("========================================")
-    ids=[4,2,3,1]
-    u_id=7
-    print(f"id 為 {ids} 且PI、COPI不為user_{u_id} 的projects：")
-    print("(照順序)(不列出過期)")
-    for project in some_projects(ids=ids,user_id=u_id): print(project)
-    
-    print("\n######################################################")
-    print(" ===================== 以下拼裝 =====================")
-    print("######################################################\n")
-    u_id=7
-    print(f"所有project的researches與tags=[user_({u_id})的偏好]")
-    print(f"有幾項符合？({{project_id : match_num}})\n{projects_match(tags=user_researches(user_id=u_id))}")    
-    
-    print("========================================")
-    u_id=7
-    print(f"所有user_{u_id}非PI、COPI的project(詳細)：")
-    for project in some_projects(ids=not_user_COPI_projects(user_id=u_id)): print(project)
-
-    print("========================================")
-    u_id=7
-    orders = projects_match(tags=user_researches(user_id=u_id))
-    orders = sorted(orders.items(), key=lambda kv : kv[1], reverse=True)
-    ids = []
-    for order in orders:
-        ids.append(order[0])
-    print(f"依據user_{u_id}偏好，選出user_{u_id}非PI、COPI的project：\n(order by 偏好_match_num)")
-    for project in some_projects(ids=ids, user_id=u_id): print(project)
