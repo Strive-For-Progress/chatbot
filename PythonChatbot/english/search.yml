@@ -1,13 +1,19 @@
 categories:
 - search
 conversations:
-- - I want to find my best plan
+- - I want to find best plan
   - SPECIALCASE1
-- - I want to find my best plan
+- - I want to find best project
   - SPECIALCASE1
-- - I want to find my best plan
+- - I want to find plan
   - SPECIALCASE1
-- - I want to find my best plan
+- - I want to find project
   - SPECIALCASE1
-- - I want to find
+- - find plan
+  - SPECIALCASE1
+- - find project
+  - SPECIALCASE1
+- - plan
+  - SPECIALCASE1
+- - project
   - SPECIALCASE1
