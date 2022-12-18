@@ -5,6 +5,14 @@ conversations:
   - SPECIALCASE1
 - - I want to find best project
   - SPECIALCASE1
+- - I want to find best plan with
+  - SPECIALCASE1
+- - I want to find best project with
+  - SPECIALCASE1
+- - I want to find best plan without
+  - SPECIALCASE1
+- - I want to find best project without
+  - SPECIALCASE1
 - - I want to find plan
   - SPECIALCASE1
 - - I want to find project
@@ -13,7 +21,15 @@ conversations:
   - SPECIALCASE1
 - - find project
   - SPECIALCASE1
-- - plan
+- - plan 
   - SPECIALCASE1
-- - project
+- - project 
+  - SPECIALCASE1
+- - plan with
+  - SPECIALCASE1
+- - project with
+  - SPECIALCASE1
+- - plan without
+  - SPECIALCASE1
+- - project without
   - SPECIALCASE1
