@@ -8,3 +8,4 @@
 為此在靖文的code弄了一個專屬網站呼叫的case2函式  
 ![image](https://user-images.githubusercontent.com/82814921/208320306-3365ba5f-2aaf-4da4-8455-7f4704852f60.png)  
 保證回傳的值永遠都會是字串,讓其他前後端盡量維持不變  
+訊息的排版以及其他操作都直接在這個函式完成  
