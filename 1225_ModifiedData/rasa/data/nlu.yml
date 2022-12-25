@@ -1,0 +1,277 @@
+version: "2.0"
+nlu:
+- intent: greet
+  examples: |
+    - hey
+    - hello
+    - hi
+    - hello there
+    - good morning
+    - good evening
+    - moin
+    - hey there
+    - let's go
+    - hey dude
+    - goodmorning
+    - goodevening
+    - good afternoon
+    - how are you
+- intent: goodbye
+  examples: |
+    - good afternoon
+    - cu
+    - good by
+    - cee you later
+    - good night
+    - bye
+    - goodbye
+    - have a nice day
+    - see you around
+    - bye bye
+    - see you later
+    - see you
+- intent: affirm
+  examples: |
+    - yes
+    - y
+    - indeed
+    - of course
+    - that sounds good
+    - correct
+- intent: deny
+  examples: |
+    - no
+    - n
+    - never
+    - I don't think so
+    - don't like that
+    - no way
+    - not really
+- intent: mood_great
+  examples: |
+    - perfect
+    - great
+    - amazing
+    - feeling like a king
+    - wonderful
+    - I am feeling very good
+    - I am great
+    - I am amazing
+    - I am going to save the world
+    - super stoked
+    - extremely good
+    - so so perfect
+    - so good
+    - so perfect
+    - good
+- intent: mood_unhappy
+  examples: |
+    - my day was horrible
+    - I am sad
+    - I don't feel very well
+    - I am disappointed
+    - super sad
+    - I'm so sad
+    - sad
+    - very sad
+    - unhappy
+    - not good
+    - not very good
+    - extremly sad
+    - so saad
+    - so sad
+    - Sad
+- intent: bot_challenge
+  examples: |
+    - are you a bot?
+    - are you a human?
+    - am I talking to a bot?
+    - am I talking to a human?
+- intent: find_projects
+  examples: |
+    - [AI]{"entity": "tags", "role": "tags"}
+    - [C]{"entity": "tags", "role": "tags"}
+    - [CPP]{"entity": "tags", "role": "tags"}
+    - [web]{"entity": "tags", "role": "tags"}
+    - [html]{"entity": "tags", "role": "tags"}
+    - [Csharp]{"entity": "tags", "role": "tags"}
+    - [2](num) [CPP]{"entity": "tags", "role": "tags"}
+    - some [CPP]{"entity": "tags", "role": "tags"}
+    - [2](num) plans
+    - [3](num) [JS]{"entity": "tags", "role": "tags"} but [web]{"entity": "tags", "role": "neg_tags"}
+    - [C]{"entity": "tags", "role": "tags"} except [ai]{"entity": "tags", "role": "neg_tags"}
+    - some [PHP]{"entity": "tags", "role": "tags"} without [JavaScript]{"entity": "tags", "role": "neg_tags"}
+    - i want [Csharp]{"entity": "tags", "role": "tags"} plans but [AI]{"entity": "tags", "role": "neg_tags"}
+    - I want to find some projects
+    - i want to find [CPP]{"entity": "tags", "role": "tags"} projects without [Csharp]{"entity": "tags", "role": "neg_tags"} [ai]{"entity": "tags", "role": "neg_tags"}
+    - i want to find [CPP]{"entity": "tags", "role": "tags"} projects except [Csharp]{"entity": "tags", "role": "neg_tags"} [ai]{"entity": "tags", "role": "neg_tags"}
+    - I want to find some projects except [AI]{"entity": "tags", "role": "neg_tags"}
+    - I want to find [12](num) projects except [AI]{"entity": "tags", "role": "neg_tags"}
+    - I want to find [2](num) projects without [Python]{"entity": "tags", "role": "neg_tags"}
+    - I want to find some projects without [java]{"entity": "tags", "role": "neg_tags"}
+    - I want to find [4](num) plans
+    - I want to find [4](num) plans about [java]{"entity": "tags", "role": "neg_tags"}
+    - I want to find [AI]{"entity": "tags", "role": "tags"} plans
+    - I want to find [CPP]{"entity": "tags", "role": "tags"} plans
+    - I want to find [CPP]{"entity": "tags", "role": "tags"} projects
+    - I want to find some projects about [C]{"entity": "tags", "role": "tags"}
+    - I want to find [4](num) projects about [CPP]{"entity": "tags", "role": "tags"}
+    - I want to find [CPP]{"entity": "tags", "role": "tags"} projects execpt [Csharp]{"entity": "tags", "role": "neg_tags"}
+    - I want to find [2](num) [CPP]{"entity": "tags", "role": "tags"} [AI]{"entity": "tags", "role": "tags"} projects
+    - I want to find [2](num) [AI]{"entity": "tags", "role": "tags"} plans except [PHP]{"entity": "tags", "role": "neg_tags"}
+    - I want to find some projects about [AI]{"entity": "tags", "role": "tags"} [html]{"entity": "tags", "role": "tags"}
+    - I want to find some plans about [AI]{"entity": "tags", "role": "tags"} [html]{"entity": "tags", "role": "tags"} [PHP]{"entity": "tags", "role": "tags"}
+    - I want to find some projects about [AI]{"entity": "tags", "role": "tags"} but [CPP]{"entity": "tags", "role": "neg_tags"}
+    - I want to find some projects about [AI]{"entity": "tags", "role": "tags"} except [CPP]{"entity": "tags", "role": "neg_tags"}
+    - I want to find [5](num) plans about [AI]{"entity": "tags", "role": "tags"} but [CPP]{"entity": "tags", "role": "neg_tags"} [web]{"entity": "tags", "role": "neg_tags"}
+    - I want to find [5](num) plans about [AI]{"entity": "tags", "role": "tags"} but [CPP]{"entity": "tags", "role": "neg_tags"} and [web]{"entity": "tags", "role": "neg_tags"}
+    - I want to find some plans with [AI]{"entity": "tags", "role": "tags"} but not [Csharp]{"entity": "tags", "role": "neg_tags"} [SQL]{"entity": "tags", "role": "neg_tags"}
+    - I want to find some plans with [AI]{"entity": "tags", "role": "tags"} except [Csharp]{"entity": "tags", "role": "neg_tags"} [SQL]{"entity": "tags", "role": "neg_tags"}
+    - I want to find [5](num) plans about [Csharp]{"entity": "tags", "role": "tags"} [AI]{"entity": "tags", "role": "tags"} but [CPP]{"entity": "tags", "role": "neg_tags"}
+    - I want to find [5](num) plans with [CPP]{"entity": "tags", "role": "tags"} [SQL]{"entity": "tags", "role": "tags"} except [JavaScript]{"entity": "tags", "role": "neg_tags"}
+    - I want to find [15](num) [CPP]{"entity": "tags", "role": "tags"} [SQL]{"entity": "tags", "role": "tags"} plans except [java]{"entity": "tags", "role": "neg_tags"}
+    - I want to find [CPP]{"entity": "tags", "role": "tags"} [SQL]{"entity": "tags", "role": "tags"} plans except [JavaScript]{"entity": "tags", "role": "neg_tags"}
+    - I want to find [5](num) plans about [CPP]{"entity": "tags", "role": "tags"} and [PHP]{"entity": "tags", "role": "tags"} but [JavaScript]{"entity": "tags", "role": "neg_tags"} and [DL]{"entity": "tags", "role": "neg_tags"}
+    - I want to find [5](num) plans with [CPP]{"entity": "tags", "role": "tags"} [C]{"entity": "tags", "role": "tags"} but [JavaScript]{"entity": "tags", "role": "neg_tags"} and [Csharp]{"entity": "tags", "role": "neg_tags"}
+    - I want to find [5](num) projects about [CPP]{"entity": "tags", "role": "tags"} [JS]{"entity": "tags", "role": "tags"} and [DL]{"entity": "tags", "role": "tags"} but [JavaScript]{"entity": "tags", "role": "neg_tags"} and [Csharp]{"entity": "tags", "role": "neg_tags"}
+    - I want to find projects about [AI]{"entity": "tags", "role": "tags"} but [C]{"entity": "tags", "role": "neg_tags"} [SQL]{"entity": "tags", "role": "neg_tags"} [DL]{"entity": "tags", "role": "neg_tags"}
+    - Give me some projects about [C]{"entity": "tags", "role": "tags"}
+    - Give me [2](num) projects about [java]{"entity": "tags", "role": "tags"} [html]{"entity": "tags", "role": "tags"}
+    - Give me some projects about [C]{"entity": "tags", "role": "tags"} and [html]{"entity": "tags", "role": "tags"}
+    - Give me [4](num) projects about [Python]{"entity": "tags", "role": "tags"} except [C]{"entity": "tags", "role": "neg_tags"}
+    - Give me [4](num) projects with [Python]{"entity": "tags", "role": "tags"} except [C]{"entity": "tags", "role": "neg_tags"} and [AI]{"entity": "tags", "role": "neg_tags"}
+    - Give me some projects about [C]{"entity": "tags", "role": "tags"} except [CPP]{"entity": "tags", "role": "neg_tags"}
+    - Give me [13](num) projects about [C]{"entity": "tags", "role": "tags"} without [CPP]{"entity": "tags", "role": "neg_tags"}
+    - Give me [17](num) projects about [C]{"entity": "tags", "role": "tags"} without [CPP]{"entity": "tags", "role": "neg_tags"} and [JS]{"entity": "tags", "role": "neg_tags"}
+    - Give me some projects about [SQL]{"entity": "tags", "role": "tags"} and [MySQL]{"entity": "tags", "role": "tags"} but [CPP]{"entity": "tags", "role": "neg_tags"}
+    - Give me [3](num) plans with [Python]{"entity": "tags", "role": "tags"}
+    - Give me [3](num) [Python]{"entity": "tags", "role": "tags"} plans
+    - Give me [3](num) [Python]{"entity": "tags", "role": "tags"} [AI]{"entity": "tags", "role": "tags"} projects
+    - Give me [3](num) [CPP]{"entity": "tags", "role": "tags"} [AI]{"entity": "tags", "role": "tags"} projects except [java]{"entity": "tags", "role": "neg_tags"}
+    - Give me [3](num) [Python]{"entity": "tags", "role": "tags"} [java]{"entity": "tags", "role": "tags"} projects without [C]{"entity": "tags", "role": "neg_tags"}
+    - Show some [AI]{"entity": "tags", "role": "tags"} projects
+    - Show some projects about [AI]{"entity": "tags", "role": "tags"}
+    - Show some projects about [AI]{"entity": "tags", "role": "tags"} [C]{"entity": "tags", "role": "tags"}
+    - Show some projects about [AI]{"entity": "tags", "role": "tags"} [C]{"entity": "tags", "role": "tags"} but [Python]{"entity": "tags", "role": "neg_tags"}
+    - Show [3](num) projects with [C]{"entity": "tags", "role": "tags"} [CPP]{"entity": "tags", "role": "tags"} but [Csharp]{"entity": "tags", "role": "neg_tags"}
+    - Show [3](num) plans with [C]{"entity": "tags", "role": "tags"} [html]{"entity": "tags", "role": "tags"} but no [web]{"entity": "tags", "role": "neg_tags"}
+    - Show plans with [C]{"entity": "tags", "role": "tags"} [html]{"entity": "tags", "role": "tags"} but not [web]{"entity": "tags", "role": "neg_tags"}
+    - Show some plans with [Python]{"entity": "tags", "role": "tags"} [C]{"entity": "tags", "role": "tags"} but not [web]{"entity": "tags", "role": "neg_tags"} [AI]{"entity": "tags", "role": "neg_tags"}
+    - Show some plans with [html]{"entity": "tags", "role": "tags"} [SQL]{"entity": "tags", "role": "tags"} but not [JS]{"entity": "tags", "role": "neg_tags"} and [AI]{"entity": "tags", "role": "neg_tags"}
+    - Show some plans with [html]{"entity": "tags", "role": "tags"} [SQL]{"entity": "tags", "role": "tags"} [PHP]{"entity": "tags", "role": "tags"} but not [JS]{"entity": "tags", "role": "neg_tags"} and [AI]{"entity": "tags", "role": "neg_tags"}
+    - Show [2](num) plans with [html]{"entity": "tags", "role": "tags"} [SQL]{"entity": "tags", "role": "tags"} and [PHP]{"entity": "tags", "role": "tags"} but not [JS]{"entity": "tags", "role": "neg_tags"} [AI]{"entity": "tags", "role": "neg_tags"}
+    - Show [2](num) [html]{"entity": "tags", "role": "tags"} [SQL]{"entity": "tags", "role": "tags"} and [CPP]{"entity": "tags", "role": "tags"} plans but not [JS]{"entity": "tags", "role": "neg_tags"} [Javascript]{"entity": "tags", "role": "neg_tags"}
+    - Show [2](num) [html]{"entity": "tags", "role": "tags"} [CPP]{"entity": "tags", "role": "tags"} and [html]{"entity": "tags", "role": "tags"} plans without [DL]{"entity": "tags", "role": "neg_tags"} [C]{"entity": "tags", "role": "neg_tags"}
+    - Show [Javascript]{"entity": "tags", "role": "tags"} [MySQL]{"entity": "tags", "role": "tags"} and [Csharp]{"entity": "tags", "role": "tags"} plans without [Csharp]{"entity": "tags", "role": "neg_tags"} [web]{"entity": "tags", "role": "neg_tags"}
+    - Show [Javascript]{"entity": "tags", "role": "tags"} [MySQL]{"entity": "tags", "role": "tags"} and [PHP]{"entity": "tags", "role": "tags"} plans except [Python]{"entity": "tags", "role": "neg_tags"} [web]{"entity": "tags", "role": "neg_tags"}
+    - Show [Javascript]{"entity": "tags", "role": "tags"} and [C]{"entity": "tags", "role": "tags"} projects except [PHP]{"entity": "tags", "role": "neg_tags"} [web]{"entity": "tags", "role": "neg_tags"}
+    - Show [Javascript]{"entity": "tags", "role": "tags"} and [C]{"entity": "tags", "role": "tags"} projects except [html]{"entity": "tags", "role": "neg_tags"}
+    - Show [4](num) [Javascript]{"entity": "tags", "role": "tags"} [C]{"entity": "tags", "role": "tags"} projects except [PHP]{"entity": "tags", "role": "neg_tags"}
+    - Show some projects with [C]{"entity": "tags", "role": "tags"} [CPP]{"entity": "tags", "role": "tags"} but [Csharp]{"entity": "tags", "role": "neg_tags"}
+    - Show [5](num) [web]{"entity": "tags", "role": "tags"} plans
+    - List [7](num) projects about [SQL]{"entity": "tags", "role": "tags"}
+    - List [7](num) projects about [SQL]{"entity": "tags", "role": "tags"} and [AI]{"entity": "tags", "role": "tags"}
+    - List [7](num) plans about [SQL]{"entity": "tags", "role": "tags"} without [AI]{"entity": "tags", "role": "neg_tags"}
+    - List [7](num) projects about [SQL]{"entity": "tags", "role": "tags"} except [AI]{"entity": "tags", "role": "neg_tags"}
+    - List projects about [C]{"entity": "tags", "role": "tags"} [CPP]{"entity": "tags", "role": "tags"} except [AI]{"entity": "tags", "role": "neg_tags"}
+    - List plans about [html]{"entity": "tags", "role": "tags"} [JS]{"entity": "tags", "role": "tags"} except [C]{"entity": "tags", "role": "neg_tags"} [java]{"entity": "tags", "role": "neg_tags"}
+    - List [7](num) projects with [java]{"entity": "tags", "role": "tags"} except [AI]{"entity": "tags", "role": "neg_tags"}
+    - List [7](num) [SQL]{"entity": "tags", "role": "tags"} projects except [CPP]{"entity": "tags", "role": "neg_tags"}
+    - List [SQL]{"entity": "tags", "role": "tags"} projects except [CPP]{"entity": "tags", "role": "neg_tags"}
+    - List [SQL]{"entity": "tags", "role": "tags"} [CPP]{"entity": "tags", "role": "tags"} projects except [C]{"entity": "tags", "role": "neg_tags"}
+    - List [3](num) [java]{"entity": "tags", "role": "tags"} [AI]{"entity": "tags", "role": "tags"} projects except [CPP]{"entity": "tags", "role": "neg_tags"}
+    - List [3](num) [SQL]{"entity": "tags", "role": "tags"} [web]{"entity": "tags", "role": "tags"} projects but not [C]{"entity": "tags", "role": "neg_tags"}
+    - List [3](num) [SQL]{"entity": "tags", "role": "tags"} [MySQL]{"entity": "tags", "role": "tags"} projects but not [JS]{"entity": "tags", "role": "neg_tags"} [JavaScript]{"entity": "tags", "role": "neg_tags"}
+    - list [8](num) plans about [html]{"entity": "tags", "role": "tags"}
+    - i want to find [ai]{"entity": "tags", "role": "tags"} projects except [c]{"entity": "tags", "role": "neg_tags"}
+    - i want to find [ai]{"entity": "tags", "role": "tags"} projects except [web]{"entity": "tags", "role": "neg_tags"}
+    - i want find projects
+    - give me [5](num) projects about [ai]{"entity": "tags", "role": "tags"} [CPP]{"entity": "tags", "role": "tags"}  but [PHP]{"entity": "tags", "role": "neg_tags"}
+    - give me [5](num) projects about [CPP]{"entity": "tags", "role": "tags"} and [JS]{"entity": "tags", "role": "tags"} but [nodeJS]{"entity": "tags", "role": "neg_tags"}
+    - i want to find [C]{"entity": "tags", "role": "tags"} projects
+    - Find [8](num) [AI]{"entity": "tags", "role": "tags"} plans except [Python]{"entity": "tags", "role": "neg_tags"}
+    - i want to find [8](num) plans about [ai]{"entity": "tags", "role": "tags"} [CPP]{"entity": "tags", "role": "tags"} but [PHP]{"entity": "tags", "role": "neg_tags"}
+    - i want to find [python]{"entity": "tags", "role": "tags"} [Csharp]{"entity": "tags", "role": "tags"} but [Python]{"entity": "tags", "role": "neg_tags"}
+    - i want to find [4](num) plans about [Cpp]{"entity": "tags", "role": "tags"} [web]{"entity": "tags", "role": "tags"} but not [ai]{"entity": "tags", "role": "neg_tags"}
+    - i want to find [4](num) plans about [java]{"entity": "tags", "role": "tags"} [web]{"entity": "tags", "role": "tags"} but [html]{"entity": "tags", "role": "neg_tags"}
+    - i want to find [4](num) plans about [Csharp]{"entity": "tags", "role": "tags"} [CPP]{"entity": "tags", "role": "tags"} but [JavaScript]{"entity": "tags", "role": "neg_tags"}
+    - i want to find [7](num) plans about [Csharp]{"entity": "tags", "role": "tags"} [html]{"entity": "tags", "role": "tags"} except [DL]{"entity": "tags", "role": "neg_tags"}
+    - give me [c]{"entity": "tags", "role": "tags"} [Csharp]{"entity": "tags", "role": "tags"} [CPP]{"entity": "tags", "role": "tags"} plans
+    - give me [Csharp]{"entity": "tags", "role": "tags"} [CPP]{"entity": "tags", "role": "tags"} plans but [Python]{"entity": "tags", "role": "neg_tags"}
+    - give me [4](num) plans about [Cpp]{"entity": "tags", "role": "tags"} except [AI]{"entity": "tags", "role": "neg_tags"} [Csharp]{"entity": "tags", "role": "neg_tags"}
+    - give me [4](num) projects about [CPP]{"entity": "tags", "role": "tags"}
+    - Give me some projects
+    - list some plans
+    - show spme projects
+    - [Csharp]{"entity": "tags", "role": "tags"} plans but [AI]{"entity": "tags", "role": "neg_tags"}
+    - [4](num) [CPP]{"entity": "tags", "role": "tags"} plans but [html]{"entity": "tags", "role": "neg_tags"}
+
+    - are there any [c]{"entity": "tags", "role": "tags"} projects
+    - are there any [c]{"entity": "tags", "role": "tags"} projects without [c]{"entity": "tags", "role": "neg_tags"} projects
+    
+    - i want find [8](num) plans about [ai]{"entity": "tags", "role": "tags"} [CPP]{"entity": "tags", "role": "tags"} but [PHP]{"entity": "tags", "role": "neg_tags"}
+    - i want find [python]{"entity": "tags", "role": "tags"} [Csharp]{"entity": "tags", "role": "tags"} but [Python]{"entity": "tags", "role": "neg_tags"}
+    - i want find [4](num) plans about [Cpp]{"entity": "tags", "role": "tags"} [web]{"entity": "tags", "role": "tags"} but not [ai]{"entity": "tags", "role": "neg_tags"}
+    - i want find [4](num) plans about [java]{"entity": "tags", "role": "tags"} [web]{"entity": "tags", "role": "tags"} but [html]{"entity": "tags", "role": "neg_tags"}
+    - i want find [4](num) plans about [Csharp]{"entity": "tags", "role": "tags"} [CPP]{"entity": "tags", "role": "tags"} but [JavaScript]{"entity": "tags", "role": "neg_tags"}
+    - i want find [7](num) plans about [Csharp]{"entity": "tags", "role": "tags"} [html]{"entity": "tags", "role": "tags"} except [DL]{"entity": "tags", "role": "neg_tags"}
+    
+    - want find [8](num) plans about [ai]{"entity": "tags", "role": "tags"} [CPP]{"entity": "tags", "role": "tags"} but [PHP]{"entity": "tags", "role": "neg_tags"}
+    - want find [python]{"entity": "tags", "role": "tags"} [Csharp]{"entity": "tags", "role": "tags"} but [Python]{"entity": "tags", "role": "neg_tags"}
+    - want find [4](num) plans about [Cpp]{"entity": "tags", "role": "tags"} [web]{"entity": "tags", "role": "tags"} but not [ai]{"entity": "tags", "role": "neg_tags"}
+    - want find [4](num) plans about [java]{"entity": "tags", "role": "tags"} [web]{"entity": "tags", "role": "tags"} but [html]{"entity": "tags", "role": "neg_tags"}
+    - want find [4](num) plans about [Csharp]{"entity": "tags", "role": "tags"} [CPP]{"entity": "tags", "role": "tags"} but [JavaScript]{"entity": "tags", "role": "neg_tags"}
+    - want find [7](num) plans about [Csharp]{"entity": "tags", "role": "tags"} [html]{"entity": "tags", "role": "tags"} except [DL]{"entity": "tags", "role": "neg_tags"}
+    
+    - want [8](num) plans about [ai]{"entity": "tags", "role": "tags"} [CPP]{"entity": "tags", "role": "tags"} but [PHP]{"entity": "tags", "role": "neg_tags"}
+    - want [python]{"entity": "tags", "role": "tags"} [Csharp]{"entity": "tags", "role": "tags"} but [Python]{"entity": "tags", "role": "neg_tags"}
+    - want [4](num) plans about [Cpp]{"entity": "tags", "role": "tags"} [web]{"entity": "tags", "role": "tags"} but not [ai]{"entity": "tags", "role": "neg_tags"}
+    - want [4](num) plans about [java]{"entity": "tags", "role": "tags"} [web]{"entity": "tags", "role": "tags"} but [html]{"entity": "tags", "role": "neg_tags"}
+    - want [4](num) plans about [Csharp]{"entity": "tags", "role": "tags"} [CPP]{"entity": "tags", "role": "tags"} but [JavaScript]{"entity": "tags", "role": "neg_tags"}
+    - want [7](num) plans about [Csharp]{"entity": "tags", "role": "tags"} [html]{"entity": "tags", "role": "tags"} except [DL]{"entity": "tags", "role": "neg_tags"}
+    - Do you have a [Flask]{"entity": "tags", "role": "tags"} project?
+    - Have you worked on a [Flask]{"entity": "tags", "role": "tags"} project before?
+    - Do you know of any [Flask]{"entity": "tags", "role": "tags"} projects that are in need of volunteers?
+    - Are there ongoing [Flask]{"entity": "tags", "role": "tags"} projects here?
+- intent: thank
+  examples: |
+    - thankyou
+    - thanks
+    - thank
+    - thank you
+    - you are so nice
+    - good
+    - great
+    - good job
+    - Thanks
+    - Thank You
+    - thanks
+    - thanks a lot 
+    - thank you so much   
+    - thank you goodbye
+    - okay thank you goodbye
+    - thank you bye
+    - um okay thank you good bye
+    - thank you
+    - and thats all thank you and good bye
+    - okay thank you
+    - thanks
+    - thanks goodbye
+    - thank you and good bye
+- intent: broken
+  examples: |
+    - it's not working
+    - I think it's broken
+    - [Rasa playgrounds](product) isn't working for me
+    - [Playground](product) is broken
+    - [rasa](product) is not working
+    - help me can you fix it
+    - it's broken
+    - it's not training
+    - the [playground](product) is not training
+    - [Rasa X](product) isn't working for me
+    - [Rasa Open Source](product) is not training at all
+    - For some reason, [Rasa X](product) never loads and I don't know why
+    - help me please it's not working
+    - it won't train
+    - the bot won't train
