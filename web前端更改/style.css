@@ -2,7 +2,6 @@
     box-sizing: border-box;
     margin: 0;
     padding: 0;
-    z-index: 0;
 }
 
 body {
@@ -33,9 +32,8 @@ body {
     right: -300px;
 }
 
-
 .chatbox--onScream {
-    position: fixed;
+    position: sticky;
     z-index: 5000;
 }
 
@@ -166,6 +164,14 @@ body {
     padding: 8px 12px;
     max-width: 90%;
 }
+
+.messages__item2 {
+    margin-top: 10px;
+    background: #bfd2ee;
+    padding: 8px 12px;
+    max-width: 90%;
+}
+
 
 .messages__item--visitor,
 .messages__item--typing {
