@@ -2,6 +2,7 @@
     box-sizing: border-box;
     margin: 0;
     padding: 0;
+    z-index: 0;
 }
 
 body {
@@ -11,7 +12,8 @@ body {
     background: #F1F1F1;
 }
 
-*, html {
+*,
+html {
     --primaryGradient: linear-gradient(93.12deg, #3b46d6 0.52%, #4d92b9 100%);
     --secondaryGradient: linear-gradient(268.91deg, #3b46d6 -2.14%, #4d92b9 99.69%);
     --primaryBoxShadow: 0px 10px 15px rgba(0, 0, 0, 0.1);
@@ -32,8 +34,9 @@ body {
     right: -300px;
 }
 
+
 .chatbox--onScream {
-    position: sticky;
+    position: fixed;
     z-index: 5000;
 }
 
@@ -51,13 +54,13 @@ body {
     opacity: 0;
     transition: all .5s ease-in-out;
     /*prevent covering other components*/
-    transform-origin:bottom right;
+    transform-origin: bottom right;
 }
 
 /* CONTENT ISOPEN */
 .chatbox--active {
     position: sticky;
-    transform: translate(-330px,-60px);
+    transform: translate(-330px, -60px);
     z-index: 5000;
     opacity: 1;
 }
@@ -171,7 +174,6 @@ body {
     padding: 8px 12px;
     max-width: 90%;
 }
-
 
 .messages__item--visitor,
 .messages__item--typing {
