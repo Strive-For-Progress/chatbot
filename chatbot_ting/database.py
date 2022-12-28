@@ -147,10 +147,10 @@ def all_projects(applyEnd=False,projEnd=False,limit=5):
     cursor = db.cursor(cursor=pymysql.cursors.DictCursor)
     sql = (
             "SELECT sp.id, sp.project_title "
-                ", GROUP_CONCAT(c.name ORDER BY c.id) AS researches "
+                ", GROUP_CONCAT(r.name ORDER BY r.id ASC separator ', ' ) AS researches "
             "FROM specific_periods sp "
             "JOIN specific_period_researches spr ON spr.specific_period_id = sp.id "
-            "JOIN researches c ON c.id = spr.research_id "
+            "JOIN researches r ON r.id = spr.research_id "
             f"{applyEnd_text}"
             f"{projEnd_text}"
             "GROUP BY sp.id "
@@ -239,10 +239,10 @@ def latest_projects(limit=5,applyEnd=False,projEnd=False):
     cursor = db.cursor(cursor=pymysql.cursors.DictCursor)
     sql = (
             "SELECT sp.id, sp.project_title "
-                ", GROUP_CONCAT(c.name ORDER BY c.id) AS researches "
+                ", GROUP_CONCAT(r.name ORDER BY r.id ASC separator ', ' ) AS researches "
             "FROM specific_periods sp "
             "JOIN specific_period_researches spr ON spr.specific_period_id = sp.id "
-            "JOIN researches c ON c.id = spr.research_id "
+            "JOIN researches r ON r.id = spr.research_id "
             f"{applyEnd_text}"
             f"{projEnd_text}"
             "GROUP BY sp.id "
@@ -274,3 +274,4 @@ if __name__ == "__main__":
     print("===================================")    
     for project in latest_projects(limit=2): print(project)
     
+
